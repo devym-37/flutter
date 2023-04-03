@@ -51,29 +51,30 @@ class Player3 {
 
 class Player4 {
   final String name, team;
-  int xp, age;
+  int xp;
 
   Player4({
     required this.name,
     required this.xp,
     required this.team,
-    required this.age,
   });
 
   Player4.createBluePlayer({
     required String name,
-    required int age,
   })  : // 초기화시 설정
-        this.age = age,
         this.name = name,
         this.team = 'blue',
         this.xp = 0;
 
-  Player4.createRedPlayer(String name, int age)
-      : this.age = age,
-        this.name = name,
+  Player4.createRedPlayer(String name)
+      : this.name = name,
         this.team = 'blue',
         this.xp = 0;
+
+  Player4.fromJson(Map<String, dynamic> playerJson)
+      : name = playerJson['name'],
+        xp = playerJson['xp'],
+        team = playerJson['team'];
 
   void sayHi() {
     print('hi $name');
@@ -91,6 +92,33 @@ void main() {
     age: 21,
   );
 
-  var player4 = Player4.createBluePlayer(name: 'kime', age: 20);
-  var player5 = Player4.createRedPlayer('kime2', 21);
+  var player4 = Player4.createBluePlayer(
+    name: 'kime',
+  );
+  var player5 = Player4.createRedPlayer(
+    'kime2',
+  );
+
+  var apiData = [
+    {
+      'name': 'lee',
+      'team': 'blue',
+      'xp': 0,
+    },
+    {
+      'name': 'lee2',
+      'team': 'red',
+      'xp': 100,
+    },
+    {
+      'name': 'lee3',
+      'team': 'blue',
+      'xp': 0,
+    },
+  ];
+
+  apiData.forEach((playerJson) {
+    var player = Player4.fromJson(playerJson);
+    player.sayHi();
+  });
 }
