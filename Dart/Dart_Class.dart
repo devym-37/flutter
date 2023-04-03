@@ -1,7 +1,12 @@
 class Player {
   // 클래스에서는 타입 선언 필수
-  final String name = 'lee';
-  int xp = 1500;
+  late final String name;
+  late int xp;
+
+  Player(String name, int xp) {
+    this.name = name;
+    this.xp = xp;
+  }
 
   void sayHi() {
     print('hi $name'); // name = this.name
@@ -11,7 +16,81 @@ class Player {
   }
 }
 
+// late 삭제
+class Player2 {
+  final String name;
+  int xp;
+  String team;
+  int age;
+
+  Player2(this.name, this.xp, this.team, this.age);
+
+  void sayHi() {
+    print('hi $name');
+  }
+}
+
+// named Parameters
+class Player3 {
+  final String name;
+  int xp;
+  String team;
+  int age;
+
+  Player3({
+    required this.name,
+    required this.xp,
+    required this.team,
+    required this.age,
+  });
+
+  void sayHi() {
+    print('hi $name');
+  }
+}
+
+class Player4 {
+  final String name, team;
+  int xp, age;
+
+  Player4({
+    required this.name,
+    required this.xp,
+    required this.team,
+    required this.age,
+  });
+
+  Player4.createBluePlayer({
+    required String name,
+    required int age,
+  })  : // 초기화시 설정
+        this.age = age,
+        this.name = name,
+        this.team = 'blue',
+        this.xp = 0;
+
+  Player4.createRedPlayer(String name, int age)
+      : this.age = age,
+        this.name = name,
+        this.team = 'blue',
+        this.xp = 0;
+
+  void sayHi() {
+    print('hi $name');
+  }
+}
+
 void main() {
-  var player = Player(); // new는 필수가 아니다
+  var player = Player('lee', 1500); // new는 필수가 아니다
   player.sayHi();
+  var player2 = Player2('kim', 2500, 'blue', 12);
+  var player3 = Player3(
+    name: 'park',
+    xp: 2000,
+    team: 'red',
+    age: 21,
+  );
+
+  var player4 = Player4.createBluePlayer(name: 'kime', age: 20);
+  var player5 = Player4.createRedPlayer('kime2', 21);
 }
