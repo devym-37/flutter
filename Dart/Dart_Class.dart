@@ -81,6 +81,94 @@ class Player4 {
   }
 }
 
+class Player5 {
+  String name;
+  Level xp;
+  Team team;
+
+  Player5({
+    required this.name,
+    required this.xp,
+    required this.team,
+  });
+}
+
+enum Team { red, blue, black }
+
+enum Level { beginner, medium, pro }
+
+abstract class Human {
+  void walk();
+}
+
+class ExtendPlayer extends Human {
+  String name;
+  Level xp;
+  Team team;
+
+  ExtendPlayer({
+    required this.name,
+    required this.xp,
+    required this.team,
+  });
+
+  void walk() {
+    print("i\m walking");
+  }
+}
+
+class Coach extends Human {
+  void walk() {
+    print('i\'m walking coach');
+  }
+}
+
+// 상속
+class Human1 {
+  final String name;
+  Human1({required this.name});
+
+  void sayHi() {
+    print("hi ${name}");
+  }
+}
+
+enum TeamInfo { blue, red }
+
+class Player12 extends Human1 {
+  final TeamInfo team;
+
+  Player12({
+    required this.team,
+    required String name,
+  }) : super(name: name);
+
+  @override
+  void sayHi() {
+    print("hi ${name}");
+    super.sayHi();
+  }
+}
+
+// Mixin 생성자 없는 클래스
+class Strong {
+  final double stengthLevel = 1500.99;
+}
+
+class QuickRunner {
+  void codeRun() {
+    print('ruuuunnn');
+  }
+}
+
+class Player13 with Strong, QuickRunner {
+  final TeamInfo team;
+
+  Player13({
+    required this.team,
+  });
+}
+
 void main() {
   var player = Player('lee', 1500); // new는 필수가 아니다
   player.sayHi();
@@ -121,4 +209,15 @@ void main() {
     var player = Player4.fromJson(playerJson);
     player.sayHi();
   });
+
+  var lee = Player5(name: 'lee', xp: Level.beginner, team: Team.black)
+    ..name = 'kim'
+    ..xp = Level.medium
+    ..team = Team.blue;
+  // cascade Notaion
+
+  var teamPlayer = Player12(
+    team: TeamInfo.blue,
+    name: 'lee',
+  );
 }
