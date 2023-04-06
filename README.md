@@ -6,3 +6,8 @@
 
 노마드 코더 기초 dart 강의
 : https://nomadcoders.co/dart-for-beginners/lobby
+
+## Flutter 강의
+
+노마드 코더 기초 flutter 강의
+: https://nomadcoders.co/flutter-for-beginners/lobby
