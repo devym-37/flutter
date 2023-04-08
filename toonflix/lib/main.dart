@@ -14,7 +14,9 @@ class App extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Color(0xFF181818),
         body: Padding(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.symmetric(
+              horizontal: 40,
+            ),
             child: Column(
               children: [
                 SizedBox(
