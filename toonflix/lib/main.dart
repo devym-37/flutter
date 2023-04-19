@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:toonflix/screens/home_screen.dart';
 
 void main() {
-  runApp(App());
+  runApp(const App());
 }
 
 // flutter SDK 3개의 core Widget중 하나를 상속 받아야한다
 class App extends StatelessWidget {
+  const App({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
