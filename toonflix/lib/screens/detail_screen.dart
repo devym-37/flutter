@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toonflix/models/webtoon_detail_modal.dart';
 import 'package:toonflix/models/webtoon_episode_model.dart';
 import 'package:toonflix/services/api_service.dart';
@@ -24,6 +25,20 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   late Future<WebtoonDetailModel> webtoon;
   late Future<List<WebtoonEpisodeModel>> episodes;
+  late SharedPreferences pref;
+  bool isLiked = false;
+
+  Future initPrefs() async {
+    pref = await SharedPreferences.getInstance();
+    final likedToonds = pref.getStringList("likedToons");
+    if (likedToonds != null) {
+      if (likedToonds.contains(widget.id) == true) {
+        isLiked = true;
+      }
+    } else {
+      pref.setStringList('likedToons', []);
+    }
+  }
 
   @override
   void initState() {
@@ -31,6 +46,22 @@ class _DetailScreenState extends State<DetailScreen> {
     super.initState();
     webtoon = ApiService.getToonById(widget.id);
     episodes = ApiService.getLatestEpisodesById(widget.id);
+    initPrefs();
+  }
+
+  onLikeTap() async {
+    final likedToonds = pref.getStringList("likedToons");
+    if (likedToonds != null) {
+      if (isLiked) {
+        likedToonds.remove(widget.id);
+      } else {
+        likedToonds.add(widget.id);
+      }
+      pref.setStringList('likedToons', likedToonds);
+      setState(() {
+        isLiked = !isLiked;
+      });
+    }
   }
 
   @override
@@ -46,6 +77,14 @@ class _DetailScreenState extends State<DetailScreen> {
             fontSize: 22,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: onLikeTap,
+            icon: Icon(
+              isLiked ? Icons.favorite : Icons.favorite_outline_outlined,
+            ),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
